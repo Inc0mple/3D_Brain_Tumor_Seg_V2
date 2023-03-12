@@ -1,0 +1,185 @@
+device:cuda
+display_plot:True
+net:UNet3d_atten(
+  (conv): DoubleConv(
+    (double_conv): Sequential(
+      (0): Conv3d(4, 24, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1))
+      (1): GroupNorm(8, 24, eps=1e-05, affine=True)
+      (2): ReLU(inplace=True)
+      (3): Conv3d(24, 24, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1))
+      (4): GroupNorm(8, 24, eps=1e-05, affine=True)
+      (5): ReLU(inplace=True)
+    )
+  )
+  (enc1): Down(
+    (encoder): Sequential(
+      (0): MaxPool3d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+      (1): DoubleConv(
+        (double_conv): Sequential(
+          (0): Conv3d(24, 48, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1))
+          (1): GroupNorm(8, 48, eps=1e-05, affine=True)
+          (2): ReLU(inplace=True)
+          (3): Conv3d(48, 48, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1))
+          (4): GroupNorm(8, 48, eps=1e-05, affine=True)
+          (5): ReLU(inplace=True)
+        )
+      )
+    )
+  )
+  (enc2): Down(
+    (encoder): Sequential(
+      (0): MaxPool3d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+      (1): DoubleConv(
+        (double_conv): Sequential(
+          (0): Conv3d(48, 96, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1))
+          (1): GroupNorm(8, 96, eps=1e-05, affine=True)
+          (2): ReLU(inplace=True)
+          (3): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1))
+          (4): GroupNorm(8, 96, eps=1e-05, affine=True)
+          (5): ReLU(inplace=True)
+        )
+      )
+    )
+  )
+  (enc3): Down(
+    (encoder): Sequential(
+      (0): MaxPool3d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+      (1): DoubleConv(
+        (double_conv): Sequential(
+          (0): Conv3d(96, 192, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1))
+          (1): GroupNorm(8, 192, eps=1e-05, affine=True)
+          (2): ReLU(inplace=True)
+          (3): Conv3d(192, 192, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1))
+          (4): GroupNorm(8, 192, eps=1e-05, affine=True)
+          (5): ReLU(inplace=True)
+        )
+      )
+    )
+  )
+  (enc4): Down(
+    (encoder): Sequential(
+      (0): MaxPool3d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+      (1): DoubleConv(
+        (double_conv): Sequential(
+          (0): Conv3d(192, 192, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1))
+          (1): GroupNorm(8, 192, eps=1e-05, affine=True)
+          (2): ReLU(inplace=True)
+          (3): Conv3d(192, 192, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1))
+          (4): GroupNorm(8, 192, eps=1e-05, affine=True)
+          (5): ReLU(inplace=True)
+        )
+      )
+    )
+  )
+  (ag1): AttentionGate(
+    (W_g): Conv3d(192, 192, kernel_size=(1, 1, 1), stride=(1, 1, 1))
+    (W_x): Conv3d(192, 192, kernel_size=(2, 2, 2), stride=(2, 2, 2))
+    (relu): ReLU()
+    (psi): Conv3d(192, 1, kernel_size=(1, 1, 1), stride=(1, 1, 1))
+    (sig): Sigmoid()
+  )
+  (ag2): AttentionGate(
+    (W_g): Conv3d(96, 96, kernel_size=(1, 1, 1), stride=(1, 1, 1))
+    (W_x): Conv3d(96, 96, kernel_size=(2, 2, 2), stride=(2, 2, 2))
+    (relu): ReLU()
+    (psi): Conv3d(96, 1, kernel_size=(1, 1, 1), stride=(1, 1, 1))
+    (sig): Sigmoid()
+  )
+  (ag3): AttentionGate(
+    (W_g): Conv3d(48, 48, kernel_size=(1, 1, 1), stride=(1, 1, 1))
+    (W_x): Conv3d(48, 48, kernel_size=(2, 2, 2), stride=(2, 2, 2))
+    (relu): ReLU()
+    (psi): Conv3d(48, 1, kernel_size=(1, 1, 1), stride=(1, 1, 1))
+    (sig): Sigmoid()
+  )
+  (ag4): AttentionGate(
+    (W_g): Conv3d(24, 24, kernel_size=(1, 1, 1), stride=(1, 1, 1))
+    (W_x): Conv3d(24, 24, kernel_size=(2, 2, 2), stride=(2, 2, 2))
+    (relu): ReLU()
+    (psi): Conv3d(24, 1, kernel_size=(1, 1, 1), stride=(1, 1, 1))
+    (sig): Sigmoid()
+  )
+  (dec1): Up(
+    (up): Upsample(scale_factor=2.0, mode=trilinear)
+    (conv): DoubleConv(
+      (double_conv): Sequential(
+        (0): Conv3d(384, 96, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1))
+        (1): GroupNorm(8, 96, eps=1e-05, affine=True)
+        (2): ReLU(inplace=True)
+        (3): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1))
+        (4): GroupNorm(8, 96, eps=1e-05, affine=True)
+        (5): ReLU(inplace=True)
+      )
+    )
+  )
+  (dec2): Up(
+    (up): Upsample(scale_factor=2.0, mode=trilinear)
+    (conv): DoubleConv(
+      (double_conv): Sequential(
+        (0): Conv3d(192, 48, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1))
+        (1): GroupNorm(8, 48, eps=1e-05, affine=True)
+        (2): ReLU(inplace=True)
+        (3): Conv3d(48, 48, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1))
+        (4): GroupNorm(8, 48, eps=1e-05, affine=True)
+        (5): ReLU(inplace=True)
+      )
+    )
+  )
+  (dec3): Up(
+    (up): Upsample(scale_factor=2.0, mode=trilinear)
+    (conv): DoubleConv(
+      (double_conv): Sequential(
+        (0): Conv3d(96, 24, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1))
+        (1): GroupNorm(8, 24, eps=1e-05, affine=True)
+        (2): ReLU(inplace=True)
+        (3): Conv3d(24, 24, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1))
+        (4): GroupNorm(8, 24, eps=1e-05, affine=True)
+        (5): ReLU(inplace=True)
+      )
+    )
+  )
+  (dec4): Up(
+    (up): Upsample(scale_factor=2.0, mode=trilinear)
+    (conv): DoubleConv(
+      (double_conv): Sequential(
+        (0): Conv3d(48, 24, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1))
+        (1): GroupNorm(8, 24, eps=1e-05, affine=True)
+        (2): ReLU(inplace=True)
+        (3): Conv3d(24, 24, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1))
+        (4): GroupNorm(8, 24, eps=1e-05, affine=True)
+        (5): ReLU(inplace=True)
+      )
+    )
+  )
+  (out): Out(
+    (conv): Conv3d(24, 3, kernel_size=(1, 1, 1), stride=(1, 1, 1))
+  )
+)
+criterion:BCEDiceLoss(
+  (bce): BCEWithLogitsLoss()
+  (dice): DiceLoss()
+)
+optimizer:Adam (
+Parameter Group 0
+    amsgrad: False
+    betas: (0.9, 0.999)
+    capturable: False
+    differentiable: False
+    eps: 1e-08
+    foreach: None
+    fused: False
+    lr: 5e-06
+    maximize: False
+    weight_decay: 0
+)
+scheduler:<torch.optim.lr_scheduler.ReduceLROnPlateau object at 0x7f15530ae7f0>
+accumulation_steps:4
+phases:['train', 'val']
+num_epochs:50
+dataloaders:{'train': <torch.utils.data.dataloader.DataLoader object at 0x7f151939e4f0>, 'val': <torch.utils.data.dataloader.DataLoader object at 0x7f151939e3d0>, 'test': <torch.utils.data.dataloader.DataLoader object at 0x7f151939e3a0>}
+best_loss:0.21627553678908437
+losses:{'train': [1.4939150896362479, 1.2960553926206813, 1.1702680991176417, 1.0763811480409746, 0.991356000700831, 0.8942355228014318, 0.7872699798286641, 0.6539031747629434, 0.5289592427899176, 0.448552621804716, 0.3802301617402994, 0.33600939289018683, 0.3059637248799375, 0.2890947597674997, 0.28145879634546234, 0.2748903616299647, 0.26441172068449936, 0.24696063471271057, 0.24417540736978044, 0.23493189288182856, 0.22870554828825107, 0.23305358145626778, 0.22170625105783515, 0.21438957345689658, 0.21253224450939054, 0.2094334626832389, 0.2071251127826397, 0.2138534571281404, 0.2032681405544281, 0.20462567920127295, 0.2012245719083815, 0.1923619337351603, 0.19535821775406487, 0.19484753444960815, 0.2004364718304161, 0.19652272930843295, 0.18543775596376155, 0.1760076709063334, 0.1700374588455311, 0.16837140871034828, 0.16728656033599332, 0.16576007204024057, 0.16538606758296717, 0.1652232053558636, 0.1651757706112508, 0.1650402329493838, 0.16497718531482572, 0.1648910618581926, 0.1647762476604701, 0.16471702513416003], 'val': [1.411479117735377, 1.2256529016314812, 1.1234672159518835, 1.0345666273584906, 0.9469413993493566, 0.8397284138877437, 0.7289843840419121, 0.5941028606216863, 0.4643408678612619, 0.41727796309399157, 0.3741256771784908, 0.31766612265469896, 0.2927290971549052, 0.27850704415226885, 0.27977686698706644, 0.28127642074283565, 0.2696390971541405, 0.25809976725645783, 0.25782315236217573, 0.2613878162964335, 0.25065975917397804, 0.27375089236587846, 0.24852376937303902, 0.2607071018725071, 0.24418909875851758, 0.24604249759665076, 0.24281274667888317, 0.23288310094262069, 0.2319558525703988, 0.22938402685916648, 0.2324267213918128, 0.22321224353223476, 0.22535027633860427, 0.22231735457789223, 0.23193665720381826, 0.23034475842174493, 0.24634822823528973, 0.21750188801648482, 0.21766086119525838, 0.2183719292845366, 0.21829855104662338, 0.21705531047762566, 0.21667979067226625, 0.21647312660824578, 0.21654269591255007, 0.2164281764120426, 0.21631165889074216, 0.21627553678908437, 0.2163965308441306, 0.21647638448004453]}
+dice_scores:{'train': [0.35526463, 0.57641196, 0.59363693, 0.5998632, 0.6106534, 0.6230057, 0.64009786, 0.6955979, 0.7193331, 0.71874905, 0.7438476, 0.75782555, 0.76742554, 0.77337927, 0.7718604, 0.7742442, 0.77878666, 0.791711, 0.79185027, 0.79859316, 0.8028425, 0.79696894, 0.8066465, 0.8134708, 0.8139727, 0.8161952, 0.8176555, 0.8110978, 0.8205265, 0.818989, 0.8222074, 0.8297177, 0.8267901, 0.82693106, 0.82178557, 0.82489306, 0.8352229, 0.84350204, 0.8492118, 0.8508404, 0.85180783, 0.85306937, 0.8535724, 0.8537995, 0.8538557, 0.85396796, 0.854046, 0.85417265, 0.8542359, 0.8542621], 'val': [0.5245733, 0.5948987, 0.6168171, 0.62441194, 0.6418042, 0.61695814, 0.6320461, 0.6863466, 0.73863626, 0.70743376, 0.729874, 0.76627755, 0.77408904, 0.7782319, 0.7694325, 0.762386, 0.7691197, 0.7798801, 0.7759645, 0.77368385, 0.7813419, 0.75575155, 0.78136, 0.7670111, 0.7827482, 0.7809111, 0.78467554, 0.7933243, 0.7931789, 0.7952128, 0.7906438, 0.7994804, 0.79821396, 0.80178756, 0.791299, 0.7938153, 0.7772178, 0.804633, 0.8046638, 0.8039485, 0.8035753, 0.80486095, 0.805338, 0.805562, 0.80550015, 0.8056152, 0.8057338, 0.80579716, 0.8056612, 0.8056075]}
+jaccard_scores:{'train': [0.24517445, 0.42447934, 0.44077396, 0.4458753, 0.45633385, 0.4675459, 0.48740005, 0.5513134, 0.5808317, 0.5817009, 0.611686, 0.62777966, 0.6394995, 0.6479089, 0.6458967, 0.64880407, 0.6540156, 0.6692368, 0.66910493, 0.67850196, 0.68335235, 0.6761977, 0.68652815, 0.69610876, 0.69716233, 0.69991153, 0.70263886, 0.6929929, 0.7054479, 0.7039487, 0.7073934, 0.71745896, 0.7134543, 0.7139315, 0.7069852, 0.7109247, 0.72424805, 0.73566467, 0.74359465, 0.7458415, 0.74707437, 0.7489569, 0.7496405, 0.7499414, 0.7500155, 0.75015545, 0.7502643, 0.7504242, 0.75054246, 0.7505667], 'val': [0.3764326, 0.44165114, 0.45980683, 0.46717465, 0.48573273, 0.45960173, 0.4769889, 0.5387742, 0.60216737, 0.5650142, 0.59778994, 0.6421264, 0.65019745, 0.65715957, 0.6466459, 0.63553303, 0.6452841, 0.6585777, 0.65015197, 0.6511744, 0.66094, 0.62525326, 0.65868044, 0.64338154, 0.662514, 0.66093993, 0.66289043, 0.6762861, 0.6743803, 0.6783348, 0.6747924, 0.68322086, 0.6801494, 0.68584484, 0.67079765, 0.6746992, 0.6546897, 0.68986374, 0.6900897, 0.68928087, 0.68884075, 0.6903011, 0.6909045, 0.6911619, 0.69113475, 0.6912479, 0.691419, 0.69148874, 0.69140077, 0.69133145]}
+last_completed_run_time:3:37:32.812110
+parameter_count:6094231
