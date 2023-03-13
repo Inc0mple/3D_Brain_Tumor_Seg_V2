@@ -246,20 +246,20 @@ class ONet3d_v2(nn.Module):
         self.enc3_bot = DownSingle(4 * n_channels, 8 * n_channels, kernel_size=3, padding=1)
         self.enc4_bot = DownSingle(8 * n_channels, 8 * n_channels, kernel_size=3, padding=1)
         
-        self.enc1_top = DownSingle(n_channels, 2 * n_channels, kernel_size=3, padding=2)
-        self.enc2_top = DownSingle(2 * n_channels, 4 * n_channels, kernel_size=3, padding=2)
-        self.enc3_top = DownSingle(4 * n_channels, 8 * n_channels, kernel_size=3, padding=2)
-        self.enc4_top = DownSingle(8 * n_channels, 8 * n_channels, kernel_size=3, padding=2)
+        self.enc1_top = DownSingle(n_channels, 2 * n_channels, kernel_size=3, padding=1)
+        self.enc2_top = DownSingle(2 * n_channels, 4 * n_channels, kernel_size=3, padding=1)
+        self.enc3_top = DownSingle(4 * n_channels, 8 * n_channels, kernel_size=3, padding=1)
+        self.enc4_top = DownSingle(8 * n_channels, 8 * n_channels, kernel_size=3, padding=1)
 
         self.dec1_bot = UpSingle(16 * n_channels, 4 * n_channels, kernel_size=3, padding=1)
         self.dec2_bot = UpSingle(8 * n_channels, 2 * n_channels, kernel_size=3, padding=1)
         self.dec3_bot = UpSingle(4 * n_channels, n_channels, kernel_size=3, padding=1)
         self.dec4_bot = UpSingle(2 * n_channels, n_channels, kernel_size=3, padding=1)
         
-        self.dec1_top = UpSingle(16 * n_channels, 4 * n_channels, kernel_size=3, padding=2)
-        self.dec2_top = UpSingle(8 * n_channels, 2 * n_channels, kernel_size=3, padding=2)
-        self.dec3_top = UpSingle(4 * n_channels, n_channels, kernel_size=3, padding=2)
-        self.dec4_top = UpSingle(2 * n_channels, n_channels, kernel_size=3, padding=2)
+        self.dec1_top = UpSingle(16 * n_channels, 4 * n_channels, kernel_size=3, padding=1)
+        self.dec2_top = UpSingle(8 * n_channels, 2 * n_channels, kernel_size=3, padding=1)
+        self.dec3_top = UpSingle(4 * n_channels, n_channels, kernel_size=3, padding=1)
+        self.dec4_top = UpSingle(2 * n_channels, n_channels, kernel_size=3, padding=1)
         
         self.before_out = BeforeOut(2*n_channels, n_channels)
         self.out = Out(n_channels, n_classes)
