@@ -1,0 +1,226 @@
+device:cuda
+display_plot:True
+net:ONet3d_v3_GELU(
+  (conv): DoubleConvTwoOut(
+    (DoubleConvTwoOut): Sequential(
+      (0): Conv3d(4, 24, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1))
+      (1): GroupNorm(8, 24, eps=1e-05, affine=True)
+      (2): GELU(approximate='none')
+      (3): Conv3d(24, 24, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1))
+      (4): GroupNorm(8, 24, eps=1e-05, affine=True)
+      (5): GELU(approximate='none')
+    )
+  )
+  (enc1_bot): DownSingle(
+    (encoder): Sequential(
+      (0): MaxPool3d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+      (1): SingleConv(
+        (single_conv): Sequential(
+          (0): Conv3d(24, 48, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1))
+          (1): GroupNorm(8, 48, eps=1e-05, affine=True)
+          (2): GELU(approximate='none')
+        )
+      )
+    )
+  )
+  (enc2_bot): DownSingle(
+    (encoder): Sequential(
+      (0): MaxPool3d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+      (1): SingleConv(
+        (single_conv): Sequential(
+          (0): Conv3d(48, 96, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1))
+          (1): GroupNorm(8, 96, eps=1e-05, affine=True)
+          (2): GELU(approximate='none')
+        )
+      )
+    )
+  )
+  (enc3_bot): DownSingle(
+    (encoder): Sequential(
+      (0): MaxPool3d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+      (1): SingleConv(
+        (single_conv): Sequential(
+          (0): Conv3d(96, 192, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1))
+          (1): GroupNorm(8, 192, eps=1e-05, affine=True)
+          (2): GELU(approximate='none')
+        )
+      )
+    )
+  )
+  (enc4_bot): DownSingle(
+    (encoder): Sequential(
+      (0): MaxPool3d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+      (1): SingleConv(
+        (single_conv): Sequential(
+          (0): Conv3d(192, 192, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1))
+          (1): GroupNorm(8, 192, eps=1e-05, affine=True)
+          (2): GELU(approximate='none')
+        )
+      )
+    )
+  )
+  (enc1_top): DownSingle(
+    (encoder): Sequential(
+      (0): MaxPool3d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+      (1): SingleConv(
+        (single_conv): Sequential(
+          (0): Conv3d(24, 48, kernel_size=(1, 1, 1), stride=(1, 1, 1))
+          (1): GroupNorm(8, 48, eps=1e-05, affine=True)
+          (2): GELU(approximate='none')
+        )
+      )
+    )
+  )
+  (enc2_top): DownSingle(
+    (encoder): Sequential(
+      (0): MaxPool3d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+      (1): SingleConv(
+        (single_conv): Sequential(
+          (0): Conv3d(48, 96, kernel_size=(1, 1, 1), stride=(1, 1, 1))
+          (1): GroupNorm(8, 96, eps=1e-05, affine=True)
+          (2): GELU(approximate='none')
+        )
+      )
+    )
+  )
+  (enc3_top): DownSingle(
+    (encoder): Sequential(
+      (0): MaxPool3d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+      (1): SingleConv(
+        (single_conv): Sequential(
+          (0): Conv3d(96, 192, kernel_size=(1, 1, 1), stride=(1, 1, 1))
+          (1): GroupNorm(8, 192, eps=1e-05, affine=True)
+          (2): GELU(approximate='none')
+        )
+      )
+    )
+  )
+  (enc4_top): DownSingle(
+    (encoder): Sequential(
+      (0): MaxPool3d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+      (1): SingleConv(
+        (single_conv): Sequential(
+          (0): Conv3d(192, 192, kernel_size=(1, 1, 1), stride=(1, 1, 1))
+          (1): GroupNorm(8, 192, eps=1e-05, affine=True)
+          (2): GELU(approximate='none')
+        )
+      )
+    )
+  )
+  (dec1_bot): UpSingle(
+    (upSingle): Upsample(scale_factor=2.0, mode=trilinear)
+    (conv): SingleConv(
+      (single_conv): Sequential(
+        (0): Conv3d(384, 96, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1))
+        (1): GroupNorm(8, 96, eps=1e-05, affine=True)
+        (2): GELU(approximate='none')
+      )
+    )
+  )
+  (dec2_bot): UpSingle(
+    (upSingle): Upsample(scale_factor=2.0, mode=trilinear)
+    (conv): SingleConv(
+      (single_conv): Sequential(
+        (0): Conv3d(192, 48, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1))
+        (1): GroupNorm(8, 48, eps=1e-05, affine=True)
+        (2): GELU(approximate='none')
+      )
+    )
+  )
+  (dec3_bot): UpSingle(
+    (upSingle): Upsample(scale_factor=2.0, mode=trilinear)
+    (conv): SingleConv(
+      (single_conv): Sequential(
+        (0): Conv3d(96, 24, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1))
+        (1): GroupNorm(8, 24, eps=1e-05, affine=True)
+        (2): GELU(approximate='none')
+      )
+    )
+  )
+  (dec4_bot): UpSingle(
+    (upSingle): Upsample(scale_factor=2.0, mode=trilinear)
+    (conv): SingleConv(
+      (single_conv): Sequential(
+        (0): Conv3d(48, 24, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1))
+        (1): GroupNorm(8, 24, eps=1e-05, affine=True)
+        (2): GELU(approximate='none')
+      )
+    )
+  )
+  (dec1_top): UpSingle(
+    (upSingle): Upsample(scale_factor=2.0, mode=trilinear)
+    (conv): SingleConv(
+      (single_conv): Sequential(
+        (0): Conv3d(384, 96, kernel_size=(1, 1, 1), stride=(1, 1, 1))
+        (1): GroupNorm(8, 96, eps=1e-05, affine=True)
+        (2): GELU(approximate='none')
+      )
+    )
+  )
+  (dec2_top): UpSingle(
+    (upSingle): Upsample(scale_factor=2.0, mode=trilinear)
+    (conv): SingleConv(
+      (single_conv): Sequential(
+        (0): Conv3d(192, 48, kernel_size=(1, 1, 1), stride=(1, 1, 1))
+        (1): GroupNorm(8, 48, eps=1e-05, affine=True)
+        (2): GELU(approximate='none')
+      )
+    )
+  )
+  (dec3_top): UpSingle(
+    (upSingle): Upsample(scale_factor=2.0, mode=trilinear)
+    (conv): SingleConv(
+      (single_conv): Sequential(
+        (0): Conv3d(96, 24, kernel_size=(1, 1, 1), stride=(1, 1, 1))
+        (1): GroupNorm(8, 24, eps=1e-05, affine=True)
+        (2): GELU(approximate='none')
+      )
+    )
+  )
+  (dec4_top): UpSingle(
+    (upSingle): Upsample(scale_factor=2.0, mode=trilinear)
+    (conv): SingleConv(
+      (single_conv): Sequential(
+        (0): Conv3d(48, 24, kernel_size=(1, 1, 1), stride=(1, 1, 1))
+        (1): GroupNorm(8, 24, eps=1e-05, affine=True)
+        (2): GELU(approximate='none')
+      )
+    )
+  )
+  (before_out): BeforeOut(
+    (mergeConv): Sequential(
+      (0): Conv3d(48, 24, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1))
+      (1): GroupNorm(8, 24, eps=1e-05, affine=True)
+      (2): GELU(approximate='none')
+    )
+  )
+  (out): Out(
+    (conv): Conv3d(24, 3, kernel_size=(1, 1, 1), stride=(1, 1, 1))
+  )
+)
+criterion:BCEDiceLoss(
+  (bce): BCEWithLogitsLoss()
+  (dice): DiceLoss()
+)
+optimizer:AdamW (
+Parameter Group 0
+    amsgrad: False
+    betas: (0.9, 0.999)
+    capturable: False
+    eps: 1e-08
+    foreach: None
+    lr: 5.000000000000002e-09
+    maximize: False
+    weight_decay: 0.01
+)
+scheduler:<torch.optim.lr_scheduler.ReduceLROnPlateau object at 0x7fbf0a681700>
+accumulation_steps:4
+phases:['train', 'val']
+num_epochs:50
+dataloaders:{'train': <torch.utils.data.dataloader.DataLoader object at 0x7fbf0a45d5b0>, 'val': <torch.utils.data.dataloader.DataLoader object at 0x7fbf0a45d970>, 'test': <torch.utils.data.dataloader.DataLoader object at 0x7fbf0a45d850>}
+best_loss:0.14564857540546722
+losses:{'train': [1.291552747610404, 1.145171079345529, 1.0338404196750075, 0.9349482696319261, 0.8193553996630041, 0.6824334307995132, 0.5236361433571283, 0.3945614402625044, 0.32419514367109015, 0.2647478611353686, 0.24802072629502517, 0.22906997916023086, 0.20579148868644193, 0.18901502547835217, 0.17878299301398118, 0.17222843285182582, 0.16717005217936556, 0.15663688278583518, 0.15600064317536444, 0.15368696894255882, 0.16008015152619365, 0.14244882163269437, 0.14313486375679535, 0.1409733275043647, 0.13942472533298084, 0.13508187707499406, 0.13241747197316173, 0.1343304733869694, 0.1387149079387632, 0.13501331967942615, 0.12601785664889295, 0.1167418628846058, 0.11418502317465304, 0.11318949309705328, 0.11266009328256542, 0.11212884222543285, 0.1109376833154448, 0.11078965751730444, 0.11079315603232656, 0.11062160386445405, 0.1106107593177616, 0.11060129067800344, 0.11058699693743267, 0.11058687752983869, 0.11058690362103539, 0.11058460969208765, 0.11058452995954357, 0.11058453378398608, 0.11058430176780705, 0.11058433717931178], 'val': [1.2079533361039072, 1.0854332064682584, 0.9852483238814012, 0.8764878612644268, 0.7468394007322923, 0.5874388470964612, 0.45573935812374333, 0.3460081135326961, 0.30507607223852623, 0.26406329631243114, 0.23423413608996374, 0.2066681279607539, 0.20836019712799, 0.19943755991616338, 0.184108149471148, 0.18919346833004141, 0.18501896130026513, 0.1698282057384275, 0.17098018316165456, 0.16618361886379854, 0.16642082257653182, 0.16373946370100076, 0.15984291484895743, 0.18286362142776544, 0.17734401188087914, 0.15820764026270723, 0.16093700519710216, 0.15401568003701713, 0.15783348517879, 0.1587268589943085, 0.15590332230588175, 0.14662117496976312, 0.14564857540546722, 0.14824983013688392, 0.1477731556965495, 0.14810698788683369, 0.1477319598900822, 0.14750806129765962, 0.147146306721107, 0.14722465878387667, 0.1472213367386809, 0.14727672421426144, 0.14727974943113778, 0.1472843240876243, 0.147282425595342, 0.14728360011611344, 0.147283654308544, 0.1472840727359619, 0.14728476514793792, 0.14728406999471053]}
+dice_scores:{'train': [0.5456765, 0.65032464, 0.69773895, 0.7069331, 0.7327664, 0.761337, 0.79334015, 0.8126678, 0.8090398, 0.83129895, 0.8225816, 0.82775307, 0.84125197, 0.85103065, 0.85647213, 0.859166, 0.86170596, 0.8693555, 0.8683609, 0.86923754, 0.86205083, 0.87771416, 0.8762761, 0.87745655, 0.8786658, 0.8820696, 0.8840846, 0.8818945, 0.8776954, 0.88049555, 0.8888875, 0.8972619, 0.8996031, 0.90056306, 0.9010207, 0.9014735, 0.90261024, 0.90274346, 0.902732, 0.9028911, 0.9029003, 0.90291363, 0.9029291, 0.90292937, 0.9029283, 0.90293205, 0.9029324, 0.9029317, 0.90293276, 0.9029315], 'val': [0.66843027, 0.71687907, 0.75811636, 0.75075406, 0.7876891, 0.8049355, 0.7889819, 0.79872215, 0.7951749, 0.81020576, 0.8276069, 0.84323835, 0.83485365, 0.8377949, 0.8483424, 0.8400254, 0.8413724, 0.8554098, 0.8526401, 0.8561124, 0.8555415, 0.8565812, 0.8599723, 0.8387034, 0.8420607, 0.8596553, 0.85738933, 0.8640231, 0.85967284, 0.8587082, 0.8605202, 0.86939615, 0.8703965, 0.8678612, 0.8682604, 0.86795884, 0.8683006, 0.8684608, 0.86876816, 0.86870044, 0.8686994, 0.8686541, 0.86864996, 0.8686484, 0.8686486, 0.8686474, 0.8686472, 0.8686448, 0.8686467, 0.8686473]}
+jaccard_scores:{'train': [0.39882606, 0.5055226, 0.556547, 0.566613, 0.597695, 0.6306406, 0.6729241, 0.69698495, 0.6946307, 0.7223173, 0.7104252, 0.7168015, 0.7376672, 0.74829346, 0.7569501, 0.7605965, 0.76359284, 0.7744532, 0.774185, 0.7748619, 0.7654969, 0.7872931, 0.785137, 0.78688556, 0.7890178, 0.7939811, 0.79669726, 0.79388916, 0.787845, 0.79154706, 0.8044061, 0.81744874, 0.82096696, 0.8224659, 0.82320136, 0.82392114, 0.8256591, 0.82588494, 0.8258698, 0.8260947, 0.82610834, 0.8261318, 0.8261571, 0.8261578, 0.8261563, 0.82616204, 0.8261627, 0.8261615, 0.8261632, 0.8261613], 'val': [0.5177167, 0.5776279, 0.62563276, 0.6156867, 0.661895, 0.68515736, 0.66570663, 0.67959595, 0.6701584, 0.69398904, 0.71764, 0.737794, 0.7282257, 0.7300537, 0.7471064, 0.73503643, 0.7380318, 0.7547071, 0.7526222, 0.7553676, 0.75660807, 0.75746495, 0.7628745, 0.7340927, 0.7425759, 0.764304, 0.7612457, 0.76802814, 0.7630769, 0.76112944, 0.7655418, 0.77751374, 0.77882653, 0.77547276, 0.7763555, 0.7760694, 0.7764776, 0.77666897, 0.7770632, 0.77697325, 0.776973, 0.7769126, 0.7769068, 0.7769044, 0.77690464, 0.77690357, 0.776903, 0.7768998, 0.77690166, 0.77690285]}
+last_completed_run_time:7:45:28.808567
+parameter_count:3150435
