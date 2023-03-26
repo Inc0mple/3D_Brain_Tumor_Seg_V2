@@ -1,0 +1,164 @@
+{
+    "3DOnet_DoubleConv_Kernel1": {
+        "ET dice": 0.6600184281490228,
+        "ET jaccard": 0.5677616029739685,
+        "Inference time": "0:00:27.409220",
+        "TC dice": 0.70579570773853,
+        "TC jaccard": 0.6016989840027841,
+        "WT dice": 0.8801423868148563,
+        "WT jaccard": 0.8021646076814642
+    },
+    "3DOnet_SingleConv_Kernel1": {
+        "ET dice": 0.7093477579493535,
+        "ET jaccard": 0.6172030369446814,
+        "Inference time": "0:00:22.710056",
+        "TC dice": 0.7282262109773739,
+        "TC jaccard": 0.6362721057154093,
+        "WT dice": 0.8753003686396382,
+        "WT jaccard": 0.7955513471746416
+    },
+    "3DOnet_SingleConv_Kernel1_32_Channels": {
+        "ET dice": 0.670578204559372,
+        "ET jaccard": 0.576074225647468,
+        "Inference time": "0:00:29.719432",
+        "TC dice": 0.7365154700320923,
+        "TC jaccard": 0.6299864930473023,
+        "WT dice": 0.8859685722222216,
+        "WT jaccard": 0.808477808801175
+    },
+    "3DOnet_SingleConv_Kernel1_GELU": {
+        "ET dice": 0.7217521732732122,
+        "ET jaccard": 0.6266311524189175,
+        "Inference time": "0:00:23.177769",
+        "TC dice": 0.744940707717961,
+        "TC jaccard": 0.6434738112479998,
+        "WT dice": 0.8816566922283043,
+        "WT jaccard": 0.8049859080226527
+    },
+    "3DOnet_SingleConv_Kernel1_GELU_AdamW": {
+        "ET dice": 0.6947559436903384,
+        "ET jaccard": 0.6006181608914207,
+        "Inference time": "0:00:22.526690",
+        "TC dice": 0.7571993240071488,
+        "TC jaccard": 0.6565101049393144,
+        "WT dice": 0.8879399952479144,
+        "WT jaccard": 0.80970169948477
+    },
+    "3DOnet_SingleConv_Kernel3": {
+        "ET dice": 0.6596764343012342,
+        "ET jaccard": 0.56667869971721,
+        "Inference time": "0:00:24.983352",
+        "TC dice": 0.7216991191403853,
+        "TC jaccard": 0.6263706269301458,
+        "WT dice": 0.8593498711428803,
+        "WT jaccard": 0.7796885465424668
+    },
+    "3DOnet_SingleConv_Kernel5": {
+        "ET dice": 0.6877420274927132,
+        "ET jaccard": 0.5905214559146804,
+        "Inference time": "0:00:30.870954",
+        "TC dice": 0.7063599321204684,
+        "TC jaccard": 0.5961574825284771,
+        "WT dice": 0.870549595399186,
+        "WT jaccard": 0.7897146469710477
+    },
+    "3DUnet": {
+        "ET dice": 0.6413508283299347,
+        "ET jaccard": 0.5425428025909532,
+        "Inference time": "0:00:18.056819",
+        "TC dice": 0.6736372280569016,
+        "TC jaccard": 0.5661412037377093,
+        "WT dice": 0.8749634835822608,
+        "WT jaccard": 0.7900218318413416
+    },
+    "3DUnet_32_Channels": {
+        "ET dice": 0.6507720705659364,
+        "ET jaccard": 0.5497708717306993,
+        "Inference time": "0:00:22.688256",
+        "TC dice": 0.6848591930680128,
+        "TC jaccard": 0.5722188712153079,
+        "WT dice": 0.8650578457093889,
+        "WT jaccard": 0.7809975189980849
+    },
+    "3DUnet_Atten": {
+        "ET dice": 0.6266877422193236,
+        "ET jaccard": 0.5230903461950758,
+        "Inference time": "0:00:19.038214",
+        "TC dice": 0.6216314720673237,
+        "TC jaccard": 0.5162949050853487,
+        "WT dice": 0.8290452138950262,
+        "WT jaccard": 0.7333531230552464
+    },
+    "3DUnet_Dropout": {
+        "ET dice": 0.6426571820816731,
+        "ET jaccard": 0.5393176197410577,
+        "Inference time": "0:00:17.578689",
+        "TC dice": 0.6775096822446075,
+        "TC jaccard": 0.5689760724854943,
+        "WT dice": 0.8527343023955976,
+        "WT jaccard": 0.7719101049755157
+    },
+    "3DUnet_GELU": {
+        "ET dice": 0.684935337630143,
+        "ET jaccard": 0.5887946572478174,
+        "Inference time": "0:00:18.503391",
+        "TC dice": 0.7261929128258278,
+        "TC jaccard": 0.6323021259789767,
+        "WT dice": 0.8729877872947005,
+        "WT jaccard": 0.7944140484705104
+    },
+    "3DUnet_SELU": {
+        "ET dice": 0.6190514225190562,
+        "ET jaccard": 0.5143759952107995,
+        "Inference time": "0:00:17.882020",
+        "TC dice": 0.6390298864428334,
+        "TC jaccard": 0.5302856845825252,
+        "WT dice": 0.8554495059568126,
+        "WT jaccard": 0.7689745961270921
+    },
+    "3DUnet_SingleConv": {
+        "ET dice": 0.6245684303206838,
+        "ET jaccard": 0.5209983689555211,
+        "Inference time": "0:00:15.204019",
+        "TC dice": 0.682001466186057,
+        "TC jaccard": 0.5785338361220659,
+        "WT dice": 0.8730757200440721,
+        "WT jaccard": 0.7900710768850162
+    },
+    "SphereNet3D": {
+        "ET dice": 0.6860080553346143,
+        "ET jaccard": 0.593017684781998,
+        "Inference time": "0:00:36.352582",
+        "TC dice": 0.7526103281071324,
+        "TC jaccard": 0.658190606781075,
+        "WT dice": 0.8666824196638815,
+        "WT jaccard": 0.7929235839543941
+    },
+    "SwinUNETR": {
+        "ET dice": 0.6639886846325087,
+        "ET jaccard": 0.574942348816513,
+        "Inference time": "0:00:20.385787",
+        "TC dice": 0.6887739373650663,
+        "TC jaccard": 0.5758230387247999,
+        "WT dice": 0.866566699156769,
+        "WT jaccard": 0.7902334635354995
+    },
+    "SwinUNETR_AdamW": {
+        "ET dice": 0.6610536961932258,
+        "ET jaccard": 0.5722379472197875,
+        "Inference time": "0:00:20.235405",
+        "TC dice": 0.6786466135887234,
+        "TC jaccard": 0.5657028292191463,
+        "WT dice": 0.8673786015670119,
+        "WT jaccard": 0.7860500881958201
+    },
+    "SwinUNETR_DoubleLayerDepth": {
+        "ET dice": 0.6706214410065281,
+        "ET jaccard": 0.5758605814795497,
+        "Inference time": "0:00:24.147266",
+        "TC dice": 0.6642681600065803,
+        "TC jaccard": 0.5568607899399534,
+        "WT dice": 0.8733000130445017,
+        "WT jaccard": 0.7964488893819275
+    }
+}
