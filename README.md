@@ -1,13 +1,13 @@
 # 3D_Brain_Tumour_Segmentation_Project
 
-### Instructions
+### Orientation
 
-- Create ./BraTS2020 folder and download [BraTS2020 dataset from Kaggle](kaggle) into the folder.
+- Download [BraTS2020 dataset from Kaggle](https://www.kaggle.com/datasets/overspleen/brats-2020-fixed-355) into the repo folder.
 - workspace.ipynb is the main notebook currently
 
 ### Requirements
 
-- torch, torchvision, nilearn etc.
+- torch, torchvision, torchviz, nilearn, numpy, pandas, matplotlib, skimage etc.
 - Tested on Ubuntu-22.04 via WSL
 
 ### TO-DO
