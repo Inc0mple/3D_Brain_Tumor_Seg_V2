@@ -65,19 +65,6 @@ class SingleConv(nn.Module):
 
 
 
-class Down(nn.Module):
-
-    def __init__(self, in_channels, out_channels):
-        super().__init__()
-        self.encoder = nn.Sequential(
-            nn.MaxPool3d(2, 2),
-            DoubleConv(in_channels, out_channels)
-        )
-
-    def forward(self, x):
-        return self.encoder(x)
-    
-
 class DownSingle(nn.Module):
 
     def __init__(self, in_channels, out_channels, kernel_size=3, stride=1, padding=1):
@@ -106,33 +93,6 @@ class DownDoubled(nn.Module):
         return self.encoder(x), self.encoder(x)
 
 
-class Up(nn.Module):
-
-    def __init__(self, in_channels, out_channels, trilinear=True):
-        super().__init__()
-
-        if trilinear:
-            self.up = nn.Upsample(
-                scale_factor=2, mode='trilinear', align_corners=True)
-        else:
-            self.up = nn.ConvTranspose3d(
-                in_channels // 2, in_channels // 2, kernel_size=2, stride=2)
-
-        self.conv = DoubleConv(in_channels, out_channels)
-
-    def forward(self, x1, x2):
-        x1 = self.up(x1)
-
-        diffZ = x2.size()[2] - x1.size()[2]
-        diffY = x2.size()[3] - x1.size()[3]
-        diffX = x2.size()[4] - x1.size()[4]
-        x1 = F.pad(x1, [diffX // 2, diffX - diffX // 2, diffY //
-                   2, diffY - diffY // 2, diffZ // 2, diffZ - diffZ // 2])
-
-        x = torch.cat([x2, x1], dim=1)
-        return self.conv(x)
-    
-
 class UpSingle(nn.Module):
 
     def __init__(self, in_channels, out_channels, trilinear=True, kernel_size=3, stride=1, padding=1):
@@ -158,55 +118,6 @@ class UpSingle(nn.Module):
 
         x = torch.cat([x2, x1], dim=1)
         return self.conv(x)
-
-
-# class UpFinal(nn.Module):
-
-#     def __init__(self, in_channels, out_channels, trilinear=True):
-#         super().__init__()
-
-#         if trilinear:
-#             self.upFinal = nn.Upsample(
-#                 scale_factor=2, mode='trilinear', align_corners=True)
-#         else:
-#             self.upFinal = nn.ConvTranspose3d(
-#                 in_channels // 2, in_channels // 2, kernel_size=2, stride=2)
-
-#         self.conv = SingleConv(in_channels, out_channels)
-
-#     def forward(self, x1, x2, x3):
-#         x1 = self.upFinal(x1)
-#         x2 = self.upFinal(x2)
-
-#         diffZ1 = x3.size()[2] - x1.size()[2]
-#         diffY1 = x3.size()[3] - x1.size()[3]
-#         diffX1 = x3.size()[4] - x1.size()[4]
-        
-#         diffZ2 = x3.size()[2] - x2.size()[2]
-#         diffY2 = x3.size()[3] - x2.size()[3]
-#         diffX2 = x3.size()[4] - x2.size()[4]
-        
-#         x1 = F.pad(x1, [diffX1 // 2, diffX1 - diffX1 // 2, diffY1 //
-#                    2, diffY1 - diffY1 // 2, diffZ1 // 2, diffZ1 - diffZ1 // 2])
-        
-#         x2 = F.pad(x2, [diffX2 // 2, diffX2 - diffX2 // 2, diffY2 //
-#                    2, diffY2 - diffY2 // 2, diffZ2 // 2, diffZ2 - diffZ2 // 2])
-
-#         x = torch.cat([x3,x2,x1], dim=1)
-#         return self.conv(x)
-
-# class ParallelConvBlock(nn.Module):
-#     def __init__(self, in_channels, out_channels, kernel_size=3, stride=1, padding=1):
-#         super(ConvBlock, self).__init__()
-#         self.conv1 = nn.Conv2d(in_channels, out_channels,
-#                                kernel_size, stride=stride, padding=padding)
-#         self.conv2 = nn.Conv2d(in_channels, out_channels,
-#                                kernel_size, stride=stride, padding=padding)
-
-#     def forward(self, x):
-#         out1 = self.conv1(x)
-#         out2 = self.conv2(x)
-#         return out1, out2
 
 class Out(nn.Module):
     def __init__(self, in_channels, out_channels):

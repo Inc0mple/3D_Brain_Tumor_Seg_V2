@@ -42,7 +42,6 @@ class SingleConv(nn.Module):
         return self.single_conv(x)
 
 
-
 class Down(nn.Module):
 
     def __init__(self, in_channels, out_channels):
