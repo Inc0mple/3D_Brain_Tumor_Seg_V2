@@ -14,10 +14,11 @@
 3. Import and Define your model in the 2nd cell of `Train_Notebook.ipynb`; Modify `train_logs_path` to `./Log/{your_model_name}` in the 3rd cell; results will be saved to this folder.
 4. Run all cells in `Train_Notebook.ipynb` and wait till training is complete. (Delete unwanted model checkpoints in `./Log/{your_model_name` if applicable).
 5. To evaluate all models, go to the 4th cell in `VizEval_Notebook.ipynb` and populate `modelDict` with the model name (which should be exactly the same as the name of its folder in `Logs`) and its corresponding instantiation.
-6. Run all cells in `VizEval_Notebook.ipynb` to add additional evaluations/visualisations to the `Logs` folder and populate the `results` folder wiht statistics across all models.
+6. Run all cells in `VizEval_Notebook.ipynb` to add additional evaluations/visualisations to the `Logs` folder and populate the `results` folder with aggregate statistics/visualisations for all models.
 
 ### Other stuff
 
+- `Misc_Visualisations.ipynb` is a workspace used to generate miscellaneous visualisations which may be included in the final report.
 - `fold_data.csv` contains the information for mapping different patients (and their directory paths) to different training folds; generated from `Train_Notebook.ipynb`.
 - `./utils` contain vital functions and classes such as `BratsDataset.py` (the dataset class),`Meter.py` (class for tracking results in the `Trainer` class) as well as other utility for visualisation/evaluations.
 
