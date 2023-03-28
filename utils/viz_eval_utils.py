@@ -44,6 +44,107 @@ import warnings
 warnings.simplefilter("ignore")
 
 
+def get_dataloaders(
+    dataset: torch.utils.data.Dataset,
+    path_to_csv: str,
+    # phase: str,
+    val_fold: int = 0,  # Choose which fold to be the validation fold
+    test_fold: int = 1,
+    batch_size: int = 1,
+    num_workers: int = 4,
+    do_resizing: bool = True,
+):
+    assert (val_fold != test_fold)
+
+    df = pd.read_csv(path_to_csv)
+
+    '''Returns: dataloader for the model training'''
+    # Data in folds other than 0 are used for training
+    train_df = df.loc[~df['fold'].isin(
+        [val_fold, test_fold])].reset_index(drop=True)
+    # Data in fold 0 is used for validation
+    val_df = df.loc[df['fold'] == val_fold].reset_index(drop=True)
+    test_df = df.loc[df['fold'] == test_fold].reset_index(drop=True)
+
+    # dataset = dataset(df, phase)
+    train_dataset = dataset(train_df, "train", do_resizing=do_resizing)
+    val_dataset = dataset(val_df, "val", do_resizing=do_resizing)
+    test_dataset = dataset(test_df, "test", do_resizing=do_resizing)
+    train_dataloader = DataLoader(
+        train_dataset,
+        batch_size=batch_size,
+        num_workers=num_workers,
+        pin_memory=True,
+        shuffle=True,
+    )
+    val_dataloader = DataLoader(
+        val_dataset,
+        batch_size=batch_size,
+        num_workers=num_workers,
+        pin_memory=True,
+        shuffle=True,
+    )
+    test_dataloader = DataLoader(
+        test_dataset,
+        batch_size=batch_size,
+        num_workers=num_workers,
+        pin_memory=True,
+        shuffle=True,
+    )
+    return train_dataloader, val_dataloader, test_dataloader
+
+
+def compute_scores_per_classes(model,
+                               dataloader,
+                               classes):
+    """
+    Compute Dice and Jaccard coefficients for each class.
+    Params:
+        model: neural net for make predictions.
+        dataloader: dataset object to load data from.
+        classes: list with classes.
+        Returns: dictionaries with dice and jaccard coefficients for each class for each slice.
+    """
+    device = 'cuda' if torch.cuda.is_available() else 'cpu'
+    dice_scores_per_classes = {key: list() for key in classes}
+    iou_scores_per_classes = {key: list() for key in classes}
+    ids = {"Ids": list()}
+
+    with torch.no_grad():
+        for i, data in enumerate(dataloader):
+            imgs, targets = data['image'], data['mask']
+            imgs, targets = imgs.to(device), targets.to(device)
+            logits = model(imgs)
+            logits = logits.detach().cpu().numpy()
+            targets = targets.detach().cpu().numpy()
+
+            dice_scores = dice_coef_metric_per_classes(logits, targets)
+            iou_scores = jaccard_coef_metric_per_classes(logits, targets)
+            ids["Ids"].extend(data["Id"])
+
+            for key in dice_scores.keys():
+                dice_scores_per_classes[key].extend(dice_scores[key])
+
+            for key in iou_scores.keys():
+                iou_scores_per_classes[key].extend(iou_scores[key])
+    return dice_scores_per_classes, iou_scores_per_classes, ids
+
+
+def count_parameters(model):
+    return sum(p.numel() for p in model.parameters() if p.requires_grad)
+
+
+
+"""
+----------------------------------------------------------------------------------------------
+The following functions takes in the path to a model's 'trainer_properties.txt' in './Logs'
+and returns either a value or a list of values.
+----------------------------------------------------------------------------------------------
+
+"""
+
+
+
 def get_losses(filename):
 
     # open the text file
@@ -148,6 +249,15 @@ def get_train_run_time(filename):
     time_obj = datetime.strptime(time_str, "%H:%M:%S.%f").time()
     print(f"Trainer runtime = {time_obj} in {filename}")
     return time_obj
+
+
+"""
+----------------------------------------------------------------------------------------------
+The following functions takes in the dictionary of results populated in 
+`VizEval_Notebook.ipynb'and plots + saves a graph in the './results' folder.
+----------------------------------------------------------------------------------------------
+
+"""
 
 
 def plot_param_count(results_dict, paletteCols):
