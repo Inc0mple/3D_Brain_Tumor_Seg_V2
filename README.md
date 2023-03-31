@@ -60,7 +60,7 @@ pip install -r requirements.txt
 
 ### Training
 
-1. Design/modify your model in the `models` folder and give it a short but descriptive name.
+1. Design/modify your model in the `models` folder and provide the `.py` file with a short but descriptive name.
 
 2. Import and instantiate your model in the 2nd cell of `Train_Notebook.ipynb`
 
