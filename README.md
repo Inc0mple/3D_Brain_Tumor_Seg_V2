@@ -2,7 +2,7 @@
 
 ### By Bryan Tan (Chen Zhengyu), Christy Lau Jin Yun and Lee Pei Xuan
 
-### [Report](DLReport.pdf)
+## [Project Report](DLReport.pdf)
 
 ## Abstract
 
