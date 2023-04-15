@@ -1,18 +1,8 @@
 # SUTD 50.039 Deep Learning | 3D Brain Tumour Segmentation Project
 
+## [Report](DLReport.pdf) | [Slides](https://docs.google.com/presentation/d/1AO8JZ8vzHWTSOF27JMt7Ds5u4wI7p_zpL291_v0mpMc/edit?usp=sharing) | [GUI](https://fauzxan-ai-streamlit-frontend-main-9zdzta.streamlit.app/)
+
 ### By Bryan Tan (Chen Zhengyu), Christy Lau Jin Yun and Lee Pei Xuan
-
-## [Project Report](DLReport.pdf)
-
-## Abstract
-
-There is a need for automated approaches to brain-tumour segmentation as it can help reduce hospital workloads and save lives. Existing models that have proven to be suitable for the problem of tumour segmentation include 3D-UNet and Swin UNETR. Using the BraTS2020 dataset, we test several approaches for brain tumour segmentation such as developing novel models we call 3D-ONet and 3D-SphereNet, our own variant of 3D-UNet with more than one encoder-decoder paths. We aim to maximise performance (defined as high dice and jaccard scores) while minimising parameter count. We trained each model from scratch for 50 epochs using BCE-Dice Loss as the objective and evaluated them by their dice and jaccard score. We found that the performance of our proposed 3D-Onet exceeds that of NVIDIA's Swin UNETR (a model considered state-of-the-art) in data and resource-constrained environments while being much more parameter efficient. However, more work is needed to validate its performance, especially under data and resource-abundant conditions.
-
-## Proposed Model Architecture
-
-| ![3DONet.png](3DONet.png) | 
-|:--:| 
-| Double-convolution variant of our novel 3D O-Net architecture, consisting of 2 sets of Encoder-Decoder pairs. To ensure the parameter count is roughly the same as the original 3D U-Net, we mainly experiment with the single-convolution variant |
 
 ## Setup Environment
 
@@ -82,6 +72,10 @@ pip install -r requirements.txt
 
 2. To evaluate all models, go to the 4th cell in `VizEval_Notebook.ipynb` and populate `modelDict` with the model names and its corresponding instantiations. The model name should be exactly the same as the name of its folder in `./Logs`. Run all cells in `VizEval_Notebook.ipynb` to populate the results folder with aggregate statistics/visualisations for all models and add additional evaluations/visualisations to the `./Logs` folder.
 
+## Abstract
+
+There is a need for automated approaches to brain-tumour segmentation as it can help reduce hospital workloads and save lives. Existing models that have proven to be suitable for the problem of tumour segmentation include 3D-UNet and Swin UNETR. Using the BraTS2020 dataset, we test several approaches for brain tumour segmentation such as developing novel models we call 3D-ONet and 3D-SphereNet, our own variant of 3D-UNet with more than one encoder-decoder paths. We aim to maximise performance (defined as high dice and jaccard scores) while minimising parameter count. We trained each model from scratch for 50 epochs using BCE-Dice Loss as the objective and evaluated them by their dice and jaccard score. We found that the performance of our proposed 3D-Onet exceeds that of NVIDIA's Swin UNETR (a model considered state-of-the-art) in data and resource-constrained environments while being much more parameter efficient. However, more work is needed to validate its performance, especially under data and resource-abundant conditions.
+
 # Dataset
 
 We utilise the Medical Image Computing and Computer Assisted Interventions (MICCAI) Brain Tumor Segmentation (BraTS 2020) dataset which consists of 369 labelled training samples and 125 unlabelled validation samples of preoperative MRI Brain scans from 19 different institutions. Each sample comprises an image with 240x240x155 voxels saved in the Neuroimaging Informatics Technology Initiative (NIfTI) file format with the file extension \".nii.gz\". For the purpose of training and evaluation, we discard the 125 unlabelled validation samples and split the remaining 369 labelled training samples into train-val-test splits of 263-53-53 (a ratio of approximately 5:1:1).
@@ -137,6 +131,13 @@ The image is cropped from size $(240,240,155)$ to size $(224,224,128)$. This red
 ### Masking
 
 Segmentation performance in the BraTS challenge is evaluated on three partially overlapping sub-regions of tumours: whole tumour (WT), tumour core (TC), and enhancing tumour (ET). To adhere to this, 3 sets of one-hot segmentation masks are created and stacked from unions of the original annotations.
+
+## Proposed Model Architecture
+
+| ![3DONet.png](3DONet.png) |
+|:--:|
+| Double-convolution variant of our novel 3D O-Net architecture, consisting of 2 sets of Encoder-Decoder pairs. To ensure the parameter count is roughly the same as the original 3D U-Net, we mainly experiment with the single-convolution variant |
+
 
 ## Acknowledgments
 
