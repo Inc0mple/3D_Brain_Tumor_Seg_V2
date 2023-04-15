@@ -1,4 +1,4 @@
-# 3D Brain Tumour Segmentation Project
+# SUTD 50.039 Deep Learning | 3D Brain Tumour Segmentation Project
 
 ### By Bryan Tan (Chen Zhengyu), Christy Lau Jin Yun and Lee Pei Xuan
 
@@ -43,7 +43,7 @@ pip install -r requirements.txt
 
 1. **`VizData_Notebook.ipynb`** contains visualisations of the input channels, original annotations and processed segmentation masks for slices of samples in the BraTS dataset.
 
-2. **`Train_Notebook.ipynb`** contains the code necessary to train a model and save the training logs to the `./Logs` folder.
+2. **`Train_Notebook.ipynb`** contains the code necessary to train a model and save the training logs to the `./Logs` folder. Adapted from [this Kaggle notebook](https://www.kaggle.com/code/polomarco/brats20-3dunet-3dautoencoder).  
 
 3. **`VizEval_Single_Notebook.ipynb`** contains the code necessary to evaluate and visualise the predictions of a single model.
 
