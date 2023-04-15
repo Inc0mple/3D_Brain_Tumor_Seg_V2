@@ -1,6 +1,6 @@
 # SUTD 50.039 Deep Learning | 3D Brain Tumour Segmentation Project
 
-## [Report](DLReport.pdf) | [Slides](https://docs.google.com/presentation/d/1AO8JZ8vzHWTSOF27JMt7Ds5u4wI7p_zpL291_v0mpMc/edit?usp=sharing) | [GUI](https://fauzxan-ai-streamlit-frontend-main-9zdzta.streamlit.app/)
+## [Report](DLReport.pdf) | [Slides](https://docs.google.com/presentation/d/1AO8JZ8vzHWTSOF27JMt7Ds5u4wI7p_zpL291_v0mpMc/edit?usp=sharing) | [GUI](https://fauzxan-ai-streamlit-frontend-main-9zdzta.streamlit.app/) + [GUI Repo](https://github.com/fauzxan/ai_streamlit_frontend)
 
 ### By Bryan Tan (Chen Zhengyu), Christy Lau Jin Yun and Lee Pei Xuan
 
